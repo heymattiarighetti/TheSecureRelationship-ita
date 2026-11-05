@@ -3,8 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Traduzione italiana dei post di The Secure Relationship sugli stili di attaccamento.">
 <title>La relazione sicura</title>
+<meta name="description" content="Traduzione italiana dei post di The Secure Relationship (Julie Menanno) sugli stili di attaccamento ansioso, disorganizzato, evitante e sicuro, con strumenti per la coppia.">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#e8ece4">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="La relazione sicura">
+<meta property="og:title" content="La relazione sicura">
+<meta property="og:description" content="Traduzione italiana dei post di The Secure Relationship (Julie Menanno) sugli stili di attaccamento ansioso, disorganizzato, evitante e sicuro, con strumenti per la coppia.">
+<meta property="og:url" content="https://thesecurerelationship-ita.vercel.app/">
+<meta property="og:image" content="https://thesecurerelationship-ita.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="La relazione sicura: traduzione italiana dei post di The Secure Relationship">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 :root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
 body { margin: 0; font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
@@ -87,6 +101,9 @@ button:focus-visible, a:focus-visible, .lbl:focus-visible { outline: 3px solid v
 /* index */
 .home { display: flex; flex-direction: column; gap: 22px; padding-block: 10px 40px; }
 .home h1 { margin: 0; font-family: var(--font-script); font-weight: 400; font-size: clamp(54px, 10vw, 84px); line-height: 1; }
+.credits { display: flex; flex-direction: column; gap: 6px; margin-top: 18px; font-size: 14px; line-height: 1.55; color: var(--muted); }
+.credits p { margin: 0; max-width: 64ch; }
+.credits a { color: var(--ink); font-weight: 600; }
 .home .lead { margin: 0; font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 52ch; }
 .grp { display: flex; flex-direction: column; gap: 12px; }
 .grp h2 { margin: 10px 0 0; font-size: 22px; font-weight: 700; line-height: 1.2; color: var(--ink); }
@@ -275,6 +292,10 @@ body.has-nav .foot-space { height: calc(96px + env(safe-area-inset-bottom, 0px))
       <h2>Strumenti</h2>
       <ul class="series" id="seriesTools"></ul>
     </div>
+    <footer class="credits">
+      <p>Testi originali di Julie Menanno, terapeuta di coppia (LMFT), fondatrice di The Secure Relationship. Questa è una traduzione italiana non ufficiale.</p>
+      <p>Originali: <a href="https://www.instagram.com/thesecurerelationship" target="_blank" rel="noopener">@thesecurerelationship su Instagram</a> · <a href="https://www.thesecurerelationship.com" target="_blank" rel="noopener">thesecurerelationship.com</a></p>
+    </footer>
   </section>
 
   <main id="deck" class="deck one" aria-live="polite" hidden></main>
