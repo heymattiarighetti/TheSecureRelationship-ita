@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Traduzione italiana dei post di The Secure Relationship sugli stili di attaccamento.">
+<title>La relazione sicura</title>
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Sacramento&display=swap">
+<style>
+/* Layout: index of series → one sage "card" per slide, as in the original carousels; nav pinned to the bottom */
+:root {
+  --page: #e8ece4;
+  --card: #d3dbce;
+  --bubble: #fbfcf9;
+  --ink: #1f251c;
+  --muted: #56604f;
+  --fig-anx: #86a878;
+  --fig-avo: #ffffff;
+  --fig-sec: #121511;
+  --outline-sec: #121511;
+  --card-sec: #b2c6a8;
+  --venn-you: #fbfcf9;
+  --venn-me: #a9c49d;
+  --venn-us: #6f9064;
+  --figure: var(--fig-anx);
+  --outline: #1f251c;
+  --accent: #3f5c35;
+  --accent-ink: #f4f7f1;
+  --line: #bcc6b5;
+  --font-body: "Quicksand", "Nunito", "Segoe UI", system-ui, sans-serif;
+  --font-script: "Sacramento", "Brush Script MT", "Segoe Script", cursive;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #111511; --card: #1e251d; --bubble: #2a332a; --ink: #e3e9de; --muted: #a3ae9c;
+    --fig-anx: #7d9f70; --fig-avo: #e9eee6; --fig-sec: #0b0e0b; --outline-sec: #93a38b; --card-sec: #223021; --venn-you: #dfe6da; --venn-me: #8fae82; --venn-us: #587a4e; --outline: #0a0d0a; --accent: #a9c79b; --accent-ink: #142012; --line: #354134;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #111511; --card: #1e251d; --bubble: #2a332a; --ink: #e3e9de; --muted: #a3ae9c;
+  --fig-anx: #7d9f70; --fig-avo: #e9eee6; --fig-sec: #0b0e0b; --outline-sec: #93a38b; --card-sec: #223021; --venn-you: #dfe6da; --venn-me: #8fae82; --venn-us: #587a4e; --outline: #0a0d0a; --accent: #a9c79b; --accent-ink: #142012; --line: #354134;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 820px; margin: 0 auto; padding-block: 18px 0; display: flex; flex-direction: column; gap: 16px; }
+.fig-anx { --figure: var(--fig-anx); }
+.fig-avo { --figure: var(--fig-avo); }
+.fig-sec { --figure: var(--fig-sec); --outline: var(--outline-sec); }
+.slide.fig-sec { background: var(--card-sec); }
+.lbl.off { cursor: default; }
+
+/* top bar */
+.top { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; }
+.top-l { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; min-width: 0; }
+.src { margin: 0; font-size: 14px; color: var(--muted); font-weight: 500; }
+.src span { font-family: var(--font-script); font-size: 24px; color: var(--ink); margin-left: 2px; }
+.ctrls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.seg { display: inline-flex; align-items: center; gap: 2px; background: var(--card); border-radius: 999px; padding: 3px; }
+.seg-l { font-size: 13px; color: var(--muted); padding: 0 8px 0 10px; font-weight: 600; }
+.seg button, .ghost, .nav button {
+  font: 600 14px/1 var(--font-body); color: var(--ink); background: transparent; border: 0;
+  border-radius: 999px; padding: 8px 12px; cursor: pointer; text-decoration: none;
+}
+.seg button[aria-pressed="true"] { background: var(--bubble); box-shadow: 0 1px 2px rgb(0 0 0 / .12); }
+.ghost { border: 1.5px solid var(--line); padding: 8px 14px; display: inline-flex; align-items: center; }
+.ghost:hover, .seg button:hover { background: var(--bubble); }
+button:focus-visible, a:focus-visible, .lbl:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* index */
+.home { display: flex; flex-direction: column; gap: 22px; padding-block: 10px 40px; }
+.home h1 { margin: 0; font-family: var(--font-script); font-weight: 400; font-size: clamp(54px, 10vw, 84px); line-height: 1; }
+.home .lead { margin: 0; font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 52ch; }
+.grp { display: flex; flex-direction: column; gap: 12px; }
+.grp h2 { margin: 10px 0 0; font-size: 22px; font-weight: 700; line-height: 1.2; color: var(--ink); }
+.series { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.series a {
+  display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; align-items: center; gap: 18px;
+  background: var(--card); border-radius: 20px; padding: 16px 22px 16px 16px;
+  color: var(--ink); text-decoration: none; transition: background .15s;
+}
+.series a:hover { background: color-mix(in srgb, var(--card) 70%, var(--bubble)); }
+.series svg { width: 64px; height: auto; display: block; }
+.series.styles a { padding-block: 12px; }
+.series.styles svg { width: 44px; margin-inline: 10px; }
+.series .nm { font-size: 21px; font-weight: 700; display: block; }
+.series .q { font-size: 15px; color: var(--muted); font-weight: 500; display: block; margin-top: 2px; }
+.series .go { font-size: 22px; font-weight: 600; color: var(--muted); }
+
+/* slides */
+.deck { display: flex; flex-direction: column; gap: 24px; }
+.slide {
+  background: var(--card); border-radius: 22px;
+  padding: clamp(20px, 5vw, 44px);
+  display: flex; flex-direction: column; gap: clamp(18px, 3vw, 28px);
+  scroll-margin-top: 16px;
+}
+.deck.one .slide:not(.active) { display: none; }
+.deck.one .slide.active { animation: fade .28s ease-out; }
+@keyframes fade { from { opacity: .35; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.s-title { margin: 0; display: flex; flex-direction: column; gap: 2px; font-weight: 600; }
+.s-title .pre { font-size: clamp(19px, 3vw, 25px); line-height: 1.3; text-wrap: balance; }
+.s-title .key { font-family: var(--font-script); font-weight: 400; font-size: clamp(50px, 9vw, 78px); line-height: 1.05; text-wrap: balance; }
+
+.speech { display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: end; gap: 10px 46px; }
+.figwrap svg { width: 100%; height: auto; display: block; }
+.bubble {
+  position: relative; background: var(--bubble); border-radius: 38px;
+  padding: clamp(22px, 4vw, 36px); min-width: 0;
+}
+.bubble p { margin: 0; font-size: clamp(16.5px, 2.2vw, 18.5px); line-height: 1.65; max-width: 60ch; }
+.bubble::before {
+  content: ""; position: absolute; left: -54px; bottom: 26%;
+  width: 62px; height: 40px; background: var(--bubble);
+  clip-path: polygon(0 62%, 100% 0, 100% 100%);
+}
+.credit { display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--muted); font-family: var(--font-script); font-size: 26px; line-height: 1; }
+.credit svg { width: 18px; height: 22px; }
+
+/* cover */
+.cover-t { margin: 0; font-family: var(--font-script); font-weight: 400; font-size: clamp(42px, 7.4vw, 66px); line-height: 1.1; text-align: center; text-wrap: balance; }
+.diagram { width: 100%; height: auto; display: block; overflow: visible; }
+.lbl { cursor: pointer; outline: none; }
+.lbl text { font: 600 21px var(--font-body); fill: var(--ink); }
+.lbl .hit { fill: transparent; transition: fill .15s; }
+.lbl:hover .hit, .lbl:focus-visible .hit { fill: var(--bubble); }
+.arrow { stroke: var(--ink); stroke-width: 2.5; }
+.ahp { fill: var(--ink); }
+.hint { margin: 0; text-align: center; font-size: 14px; color: var(--muted); font-weight: 500; }
+
+/* downside */
+.down-t { margin: 0; font-size: clamp(22px, 3.6vw, 31px); font-weight: 600; line-height: 1.25; text-wrap: balance; text-align: center; }
+.downside p { margin: 0; font-size: clamp(16.5px, 2.1vw, 18px); line-height: 1.65; max-width: 66ch; margin-inline: auto; }
+.downside .body { display: flex; flex-direction: column; gap: 16px; }
+
+/* figure strokes */
+.o { stroke: var(--outline); }
+.f { stroke: var(--figure); }
+.hd { fill: var(--figure); stroke: var(--outline); }
+
+
+/* toolbox series */
+.tb-cover-t { margin: 0; font-family: var(--font-script); font-weight: 400; font-size: clamp(36px, 6.4vw, 58px); line-height: 1.1; text-align: center; text-wrap: balance; }
+.tb-sub { margin: -8px 0 0; text-align: center; font-size: clamp(16px, 2.4vw, 20px); font-weight: 500; color: var(--muted); text-wrap: balance; }
+.tool { fill: var(--fig-anx); }
+.tb-lbl text { font-size: 26px; }
+.eyebrow { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
+.step-t { margin: 0; font-family: var(--font-script); font-weight: 400; font-size: clamp(50px, 9vw, 80px); line-height: 1.05; text-wrap: balance; }
+.step-sub { margin: 0; font-size: clamp(17px, 2.4vw, 20px); font-weight: 600; line-height: 1.4; text-wrap: balance; }
+.tb-body { display: flex; flex-direction: column; gap: 16px; max-width: 64ch; }
+.tb-body p { margin: 0; font-size: clamp(16.5px, 2.2vw, 18.5px); line-height: 1.65; }
+.qs, .bul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.qs li { font-size: clamp(16.5px, 2.2vw, 18.5px); line-height: 1.5; font-weight: 500; padding: 10px 14px; background: color-mix(in srgb, var(--bubble) 55%, transparent); border-radius: 12px; }
+.bul li { font-size: clamp(16.5px, 2.2vw, 18.5px); line-height: 1.6; padding-left: 22px; position: relative; }
+.bul li::before { content: ""; position: absolute; left: 4px; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); }
+.example { background: var(--bubble); border-radius: 26px; padding: clamp(18px, 3.4vw, 28px); font-size: clamp(16.5px, 2.2vw, 18.5px); line-height: 1.65; margin: 0; max-width: 64ch; }
+.qa { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px; max-width: 64ch; }
+.qa .q { font-size: clamp(16.5px, 2.2vw, 18.5px); line-height: 1.5; font-weight: 600; margin: 0 0 6px; }
+.qa .a { margin: 0; font-size: clamp(16.5px, 2.2vw, 18.5px); line-height: 1.6; }
+.chip { display: inline-block; font-weight: 700; font-size: .85em; padding: 2px 10px; border-radius: 999px; margin-right: 6px; background: var(--bubble); }
+.chip.yes { background: var(--accent); color: var(--accent-ink); }
+.qa a { color: var(--ink); font-weight: 600; }
+.breathe { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.breathe-btn { font: 600 15px/1 var(--font-body); background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 999px; padding: 11px 16px; cursor: pointer; }
+.breathe-box { display: flex; align-items: center; gap: 20px; background: color-mix(in srgb, var(--bubble) 55%, transparent); border-radius: 18px; padding: 16px 20px; }
+.orb { width: 96px; height: 96px; border-radius: 50%; background: var(--fig-anx); transform: scale(.5); transition-property: transform; transition-timing-function: ease-in-out; flex: none; }
+.breathe-txt { display: flex; flex-direction: column; gap: 2px; }
+.breathe-txt b { font-size: 22px; }
+.breathe-txt span { font-size: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { .orb { transition: none !important; } }
+
+.nw { white-space: nowrap; }
+
+/* balance */
+.bal-t { margin: 0; font-family: var(--font-script); font-weight: 400; font-size: clamp(46px, 8vw, 72px); line-height: 1.05; text-align: center; text-wrap: balance; }
+.venn { width: 100%; max-width: 560px; height: auto; display: block; margin: 0 auto; }
+.venn .z { cursor: pointer; transition: opacity .2s; outline: none; }
+.venn .z:focus-visible circle { stroke: var(--accent); stroke-width: 4; }
+.venn text { font: 700 34px var(--font-body); letter-spacing: .06em; pointer-events: none; }
+.venn .t-dark { fill: #1f251c; } .venn .t-light { fill: #ffffff; }
+.venn.sel .z:not(.on) { opacity: .3; }
+.zones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.zone { background: color-mix(in srgb, var(--bubble) 55%, transparent); border-radius: 16px; padding: 14px 16px; transition: opacity .2s; }
+.zones.sel .zone:not(.on) { opacity: .35; }
+.zone h3 { margin: 0 0 8px; font-size: 15px; font-weight: 700; letter-spacing: .08em; display: flex; align-items: center; gap: 8px; }
+.zone h3 i { width: 14px; height: 14px; border-radius: 50%; display: inline-block; border: 1px solid var(--line); }
+.zone ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.zone li { font-size: 16.5px; line-height: 1.45; }
+.imb { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.imb figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+.imb svg { width: 100%; max-width: 230px; height: auto; }
+.imb text { font: 700 26px var(--font-body); letter-spacing: .06em; }
+.imb figcaption { font-size: clamp(16px, 2.2vw, 18.5px); line-height: 1.4; font-weight: 500; text-wrap: balance; }
+@media (max-width: 640px) { .zones { grid-template-columns: 1fr; } .imb { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .venn .z, .zone { transition: none; } }
+
+/* nav */
+/* fixed to the bottom of the screen so the buttons never move between slides */
+.nav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 5;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  background: var(--page); border-top: 1px solid var(--line);
+  padding-block: 10px calc(12px + env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, calc((100% - 820px) / 2), env(safe-area-inset-left, 0px));
+  padding-right: max(16px, calc((100% - 820px) / 2), env(safe-area-inset-right, 0px));
+}
+body.has-nav .foot-space { height: calc(96px + env(safe-area-inset-bottom, 0px)); }
+.nav .move { background: var(--accent); color: var(--accent-ink); padding: 11px 16px; }
+.nav .move:disabled { opacity: .35; cursor: default; }
+.mid { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; }
+.dots { display: flex; gap: 6px; flex-wrap: nowrap; justify-content: center; }
+.dots button { width: 10px; height: 10px; flex: none; padding: 0; border-radius: 50%; background: var(--line); }
+.dots button[aria-current="true"] { background: var(--accent); transform: scale(1.2); }
+.count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 600; }
+.foot-space { height: 28px; }
+
+@media (max-width: 640px) {
+  .speech { grid-template-columns: 1fr; gap: 0; }
+  .figwrap { order: 2; width: 82px; margin: 34px 0 0 6px; }
+  .bubble::before { left: 46px; bottom: -32px; width: 40px; height: 36px; clip-path: polygon(0 100%, 20% 0, 100% 0); }
+  .nav .move { padding: 11px 12px; font-size: 13px; }
+  .series a { grid-template-columns: 48px minmax(0, 1fr); padding: 14px 16px 14px 12px; gap: 14px; }
+  .series svg { width: 48px; }
+  .series a { grid-template-columns: 48px minmax(0, 1fr) auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deck.one .slide.active { animation: none; }
+  .lbl .hit, .series a { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap" lang="it">
+  <header class="top">
+    <div class="top-l">
+      <a id="backBtn" class="ghost" href="#" hidden>← Indice</a>
+      <p class="src">Traduzione italiana dei post di <span>The Secure Relationship</span></p>
+    </div>
+    <div class="ctrls">
+      <div class="seg" role="group" aria-label="Genere delle parole">
+        <span class="seg-l">Genere</span>
+        <button id="g-s" data-form="s" aria-pressed="true">schwa ə</button>
+        <button id="g-m" data-form="m" aria-pressed="false">maschile</button>
+        <button id="g-f" data-form="f" aria-pressed="false">femminile</button>
+      </div>
+      <button id="modeBtn" class="ghost" hidden>Leggi tutto di seguito</button>
+    </div>
+  </header>
+
+  <section id="home" class="home" hidden>
+    <h1>La relazione sicura</h1>
+    <div class="grp">
+      <h2>Stili di attaccamento</h2>
+      <ul class="series styles" id="seriesStyles"></ul>
+    </div>
+    <div class="grp">
+      <h2>Strumenti</h2>
+      <ul class="series" id="seriesTools"></ul>
+    </div>
+  </section>
+
+  <main id="deck" class="deck one" aria-live="polite" hidden></main>
+
+  <nav class="nav" id="nav" aria-label="Navigazione slide" hidden>
+    <button id="prev" class="move">← Indietro</button>
+    <div class="mid">
+      <div class="dots" id="dots"></div>
+      <span class="count" id="count"></span>
+    </div>
+    <button id="next" class="move">Avanti →</button>
+  </nav>
+  <div class="foot-space"></div>
+</div>
+
+<script>
+// {o|a} = desinenza maschile | femminile di chi parla; con la schwa diventa ə
+const SERIES = {
+  ansioso: {
+    name: "Stile ansioso", fig: "fig-anx",
+    cover: "Perché i partner ansiosi fanno così??????",
+    labels: [
+      [1, 200, ["Incolpare"]], [2, 160, ["Protestare"]], [3, 128, ["Pretendere"]], [4, 90, ["“Alzare l'asticella”"]],
+      [5, 52, ["“Tante parole”"]], [6, 18, ["“Filtrare", "il negativo”"]], [7, -12, ["Criticare"]], [8, -48, ["“Un piede fuori", "dalla porta”"]]
+    ],
+    slides: [
+      { pre: "Perché mi fa sentire al sicuro", key: "Incolpare?",
+        text: `Sono cresciut{o|a} in un ambiente che mi faceva vergognare; farmi vergognare e incolparmi è il modo in cui chi si prendeva cura di me mi ha insegnato a essere migliore. Se solo riesco a convincerti di quanto tu abbia sbagliato tutto, capirai che ho ragione e vorrai cambiare, e se solo tu potessi cambiare, io starò bene e tu starai bene, e la nostra relazione andrà bene… e tutto andrà meglio e non dovrò sentirmi sol{o|a} e senza il controllo della mia sicurezza.` },
+      { pre: "Perché mi fa sentire al sicuro", key: "Protestare?",
+        text: `Mi sto sforzando COSÌ tanto di essere ascoltat{o|a} e di ricevere una risposta. Se solo riesco a farmi ascoltare da te, andrà tutto bene. Sono cresciut{o|a} in una casa in cui non sapevo mai se il mio dolore emotivo avrebbe ricevuto una risposta, o sarebbe stato validato. Questo mi faceva sentire così disperat{o|a} e sol{o|a}, e a volte l'unica cosa che so fare è diventare “più grande” per essere ascoltat{o|a}.` },
+      { pre: "Perché mi fa sentire al sicuro", key: "Pretendere?",
+        text: `È davvero difficile per me fidarmi fino in fondo del fatto di essere degn{o|a} d'amore e che non verrò abbandonat{o|a}. Il modo in cui provo a rassicurarmi è farti dimostrare che mi ami e che non te ne andrai. Non sto cercando di essere pretenzios{o|a}; è solo che, nella mia mente, se fai le cose come voglio io significa che mi ami, e tutto ciò che voglio è sentirmi al sicuro e amat{o|a}. Ma siccome la mia mancanza di fiducia mi impedisce di lasciar entrare l'amore, non riesco mai a ottenere la rassicurazione che cerco… ma continuo a pretendere comunque, perché mi sembra la mia unica speranza.` },
+      { pre: "Perché mi fa sentire al sicuro", key: "“Alzare l'asticella”?",
+        text: `Continuo ad alzare l'asticella per lo stesso motivo per cui avanzo pretese… sto cercando la prova definitiva che mi ami e che non mi abbandonerai. Il problema è che, quando la ottengo, non mi fido. Siccome non mi fido, devo creare un'altra prova… alzare quell'asticella ancora un pochino… quando raggiungerai l'asticella, ALLORA mi sentirò al sicuro. Non mi rendo conto di farlo, perché è il mio tentativo inconscio di soddisfare i miei bisogni.` },
+      { pre: "Perché mi fa sentire al sicuro usare", key: "“Tante parole”?",
+        text: `Non sono abituat{o|a} a essere ascoltat{o|a} e a ricevere una risposta. Ho avuto persone che si prendevano cura di me ma che non erano disponibili in modo costante, e molto spesso avevo un bisogno disperato di essere ascoltat{o|a} e validat{o|a}. Siccome ho la convinzione profonda che la mia voce non conti, e siccome a volte tu davvero non riesci ad ascoltarmi a causa dei tuoi blocchi, continuo a ripetere le stesse parole ancora e ancora, e continuo a parlare… tante, tantissime parole… sforzandomi COSÌ tanto di essere ascoltat{o|a}.` },
+      { pre: "Perché mi fa sentire al sicuro", key: "“Filtrare il negativo”?",
+        text: `Se riesco a vedere il negativo, non verrò colt{o|a} di sorpresa e riuscirò a mantenere il controllo della situazione. Devo restare molto attent{o|a} a qualsiasi segnale di rabbia da parte tua, o che non mi ami, o che mi abbandonerai o tradirai. Sono sempre in allerta. Non è mai sicuro rilassarsi e godersi semplicemente le cose belle. Perché dovrei farlo? Nella mia esperienza, le cose belle non durano mai a lungo… se ne vanno sempre. Il mio cervello si è adattato a notare a malapena il bello. E se lo noto, non passa molto prima che trovi qualcosa di spaventoso su cui concentrarmi, e da cambiare.` },
+      { pre: "Perché mi fa sentire al sicuro", key: "Criticare?",
+        text: `Se solo riesco a farti vedere cosa stai sbagliando, staremo bene. Ho trasformato in un'arte il capire come fare le cose nel modo giusto, per mantenere il controllo, e ho dovuto farlo fin da piccol{o|a}. Certo che sono rigid{o|a} sulle mie idee, perché se non facciamo le cose a modo mio, sarò in ansia per le cose brutte che potrebbero succedere. Non sto cercando di sminuirti; è solo il modo in cui mi mantengo al sicuro. Se non la vedi come me, per me è importante mostrarti perché tu e il tuo modo di fare siete sbagliati. È così che restiamo al sicuro. Non capisci?` },
+      { pre: "Perché mi fa sentire al sicuro tenere", key: "Un piede fuori dalla porta?",
+        text: `La mia paura più grande è l'abbandono. Quindi, quando voglio davvero mostrarti quanto sono ferit{o|a}, e non riesco a farmi ascoltare da te in nessun altro modo, minaccerò di farti ciò che è la mia peggiore paura… minaccerò di andarmene. Inoltre, quando non mi sento ascoltat{o|a}, quando non ricevo risposta e non mi sento validat{o|a}, e quando mi sento tradit{o|a}, è COSÌ doloroso che l'unica cosa che voglio fare è scappare. Il problema è che ho così tanta paura dell'abbandono che non riesco a fare bene nemmeno quello. Ma posso minacciarlo, e se riesco a spaventarti, spero che mi ascolterai e che in qualche modo andrà tutto bene.` }
+    ],
+    downside: [
+      `Incolpare e criticare fanno sentire l'altra persona attaccata, inascoltata e/o non rispettata, e tutto questo alimenta il ciclo negativo. Pretendere e “alzare l'asticella” fanno sentire l'altra persona esausta, senza speranza e demoralizzata.`,
+      `Protestare, diventare emotivamente “più grandi”, alzare la voce e usare “tante parole” travolge l'altra persona e la situazione. Questi comportamenti possono far sentire l'altra persona impotente, controllata e intrappolata. “Filtrare il negativo” fa sentire l'altra persona non apprezzata, demoralizzata, e la porta a chiedersi: “riuscirò mai a fare la cosa giusta?”`,
+      `Quando il partner ansioso ha “un piede fuori dalla porta”, l'altra persona all'inizio può sentirsi minacciata, ma alla fine comincerà a vedere quel comportamento come una minaccia vuota, e questo farà sentire il partner ansioso ancora più inascoltato.`,
+      `Questo post è dedicato a capire meglio le “mosse” di un partner ansioso nel contesto di un ciclo relazionale negativo. C'è un post simile dedicato al partner evitante nel mio Highlight “Evitante” (in originale “Avoidant Highlight”).`,
+      `Questi comportamenti non definiscono il partner ansioso come persona, né in tutti gli ambiti della relazione e/o della sua vita, e i partner ansiosi non sono cattivi né senza speranza. Lo spirito di questo post è capire meglio, dal punto di vista dell'attaccamento, cosa succede dentro di loro… e c'è una via d'uscita. Per favore, leggi il mio post intitolato “Come guarire un attaccamento insicuro” (in originale “How To Heal An Insecure Attachment”).`
+    ]
+  },
+  evitante: {
+    name: "Stile evitante", fig: "fig-avo",
+    cover: "Perché i partner evitanti fanno così?????",
+    labels: [
+      [1, 200, ["Chiudersi"]], [2, 160, ["“Sistemare”"]], [3, 128, ["Accontentare"]], [4, 90, ["Difendersi"]],
+      [5, 52, ["Scattare"]], [6, 18, ["Convincere"]], [7, -12, ["Ritirarsi"]], [8, -48, ["Distrarsi"]]
+    ],
+    slides: [
+      { pre: "Perché mi fa sentire al sicuro", key: "Chiudermi?",
+        text: `Il conflitto può essere davvero travolgente per me, anche se non lo mostro all'esterno. Alcuni studi hanno dimostrato che le persone come me possono sembrare molto calme durante un conflitto, ma dentro siamo molto sotto stress a livello fisiologico. Quando mi sento così sopraffatt{o|a}, a volte il mio corpo semplicemente si blocca. Potrebbe sembrare che mi stia allontanando di proposito, ma non è sempre così.` },
+      { pre: "Perché mi fa sentire al sicuro", key: "“Sistemare”?",
+        text: `Nella mia vita non ho imparato molto sulle emozioni, né sulle mie né su quelle degli altri. Nessuno mi ha mai aiutat{o|a} a trovarle o a parlarne, o almeno non abbastanza da farmi diventare brav{o|a} in questo. Quindi il modo in cui ho imparato a gestire le mie emozioni è mantenere il mio ambiente libero da problemi, così non devo stare male. Il modo in cui tengo lontani i problemi è risolverli appena si presentano. Quindi, quando stai male, ti consolo come consolerei me stess{o|a}… sistemando le cose, e facendo sparire il problema (nella mia testa).` },
+      { pre: "Perché mi fa sentire al sicuro", key: "Accontentare?",
+        text: `Il conflitto, nel migliore dei casi, mi mette a disagio e, nel peggiore, mi spaventa. Per me è anche COSÌ importante che tu veda che faccio le cose nel modo giusto. Molto spesso mi sembra più sicuro fare qualsiasi cosa serva per renderti felice. Nella mia mente, se tu sei felice, tra noi andrà tutto bene.` },
+      { pre: "Perché mi fa sentire al sicuro", key: "Difendermi?",
+        text: `Siccome ho paura di fallire, o di essere vist{o|a} da te come un fallimento, a volte anche lamentele di poco conto possono sembrarmi critiche. Per me può essere difficile separare il fatto che tu abbia un problema con qualcosa che ho fatto da come mi vedi come partner. Quindi devo lottare con tutte le mie forze per difendermi e proteggere l'immagine che hai di me. Inoltre, a volte mi stai davvero attaccando. Per me è difficile porre dei confini, così finisco semplicemente per contrattaccare.` },
+      { pre: "Perché mi fa sentire al sicuro", key: "Scattare?",
+        text: `Ciò che mi fa sentire al sicuro è evitare il conflitto. Preferisco trattenere la rabbia quando sono arrabbiat{o|a} piuttosto che litigare o peggiorare un litigio. Inoltre, a volte non so riconoscere la rabbia e metterla in parole, quindi la ricaccio giù. A volte so che la mia rabbia c'è, ma ho paura che se la lascio vedere succederà qualcosa di brutto. La rabbia mi resta bloccata dentro e la mostro quando mi sembra più sicuro, per esempio quando succede qualcosa di piccolo e io scatto. A volte esce sotto forma di comportamenti passivo-aggressivi e subdoli.` },
+      { pre: "Perché mi fa sentire al sicuro", key: "Convincere?",
+        text: `Il modo in cui mi vedi è così importante per me. È tutto. Se stai dicendo qualcosa che sembra poter minacciare l'immagine che hai di me, voglio usare le parole giuste per farti capire perché hai torto… perché io vado bene… perché non ho fallito. Avere “ragione” mi fa sentire al sicuro. Significa che non ho “torto”. Sono cresciut{o|a} con il messaggio che “sbagliare è male”, e non che sia semplicemente una parte normale dell'essere umani.` },
+      { pre: "Perché mi fa sentire al sicuro", key: "Ritirarmi?",
+        text: `Ti ho già detto quanto non mi piace il conflitto? Molte volte è troppo. A volte non so cosa sto provando o pensando, mi sento sopraffatt{o|a} e voglio solo scappare da tutto. A volte è troppo doloroso restare lì sentendomi un fallimento, e voglio scappare anche da quello. Non è tanto che sto scappando da te; è che sto scappando dalla sensazione orribile che provo in quel momento.` },
+      { pre: "Perché mi fa sentire al sicuro", key: "Distrarmi?",
+        text: `Come ho detto, non ho ancora imparato molto bene ad accedere alle mie emozioni, a metterle in parole, a sentirle e a esprimerle. Questo mi rende difficile connettermi emotivamente e interferisce con le mie relazioni. Potrei pensare che la connessione emotiva non sia importante per me, ma lo è. A volte il modo in cui mi sento “viv{o|a}” è distrarmi con attività stimolanti, come hobby, sport, lavoro e a volte dipendenze, ecc. In alcuni ambiti, come il lavoro e gli hobby, riesco a sentire che ho successo… più di quanto mi succeda nelle relazioni, e mi piace sentire che ho successo.` }
+    ],
+    downside: [
+      `Quando il partner evitante mette da parte i propri bisogni, prova risentimento, e comunque questo non appaga mai davvero l'altra persona, perché l'altra persona percepisce la mancanza di autenticità, e questo non crea connessione. Quando l'altra persona è turbata e il partner evitante cerca di “sistemare” le sue emozioni e di farle sparire, l'altra persona si sente sola e invalidata.`,
+      `Convincere con dettagli e fatti mette l'altra persona dalla parte del “torto”, cosa che può farla infuriare, e lascia fuori la parte emotiva e relazionale della questione. Quando il partner evitante si difende, l'altra persona si sente invalidata; quando è passivo-aggressivo e scatta, si crea un clima negativo. I suoi comportamenti “subdoli” incrinano la fiducia. Quando si ritira, l'altra persona si sente abbandonata, e il distrarsi spesso lo porta lontano dalla relazione, emotivamente e fisicamente.`,
+      `Questo post è dedicato a capire meglio il partner evitante. I suoi comportamenti evitanti rinforzano i comportamenti del suo partner ansioso, che a loro volta rinforzano il comportamento evitante… ed ecco il ciclo negativo. Del partner ansioso si parlerà in un post successivo.`,
+      `Questi comportamenti non definiscono il partner evitante come persona, né in tutti gli ambiti della relazione e/o della sua vita, e i partner evitanti non sono cattivi né senza speranza. Lo spirito di questo post è capire meglio, dal punto di vista dell'attaccamento, cosa succede dentro di loro. E c'è sicuramente una via d'uscita da tutto questo. Per favore, sfoglia il mio profilo per trovare consigli e spunti sul percorso di guarigione.`
+    ]
+  },
+  disorganizzato: {
+    name: "Stile disorganizzato", fig: "fig-avo", vbTop: 32,
+    cover: "Perché i partner disorganizzati fanno così??????",
+    downTitle: "Qual è il LATO NEGATIVO?",
+    labels: [
+      [5, 205, ["La terapia", "può essere", "dolorosa"]], [3, 160, ["Avvicinarti", "e respingerti"]], [1, 128, ["Imprevedibile"]],
+      [4, 90, ["Combattiv{o|a} o", "non dire la mia"]], [2, 55, ["Disregolazione/", "dissociazione"]], [6, 15, ["Spaventat{o|a}!"]],
+      [7, -50, ["Problemi di", "salute mentale"]]
+    ],
+    slides: [
+      { pre: "Perché a volte il mio comportamento è", key: "Imprevedibile?",
+        text: `Sono cresciut{o|a} in un ambiente imprevedibile. Poteva succedere qualsiasi cosa in qualsiasi momento, quindi ho dovuto imparare molte strategie diverse per gestire quello che succedeva intorno a me, dalle situazioni di abuso a una solitudine pervasiva. Non ho sviluppato un senso di me coeso, perché mi venivano richiesti tanti modi diversi di essere. Da adult{o|a}, ogni situazione diversa può far emergere una parte diversa di me. Se uno dei miei traumi viene attivato, questo mi porterà a manifestarmi in modi che hanno senso per il modo in cui il mio sistema nervoso mi tiene al sicuro, ma che possono sembrare davvero confusi agli altri o perfino a me stess{o|a}. Inoltre dentro di me succedono tantissime cose… così tante emozioni tutte insieme che è travolgente. A volte agisco seguendo un'emozione, altre volte seguendone altre. È difficile sentire così spesso di non avere il controllo di me stess{o|a}.` },
+      { pre: "Perché ho la tendenza a", key: "Disregolarmi o dissociarmi?",
+        text: `Da bambin{o|a}, o forse durante un evento traumatico da adult{o|a}, il mio cervello si è protetto durante il trauma entrando in stati profondi di disregolazione o di dissociazione. Vista l'entità del pericolo in quei momenti, se ero il tipo che reagiva con la “lotta”, mi perdevo completamente e lottavo con tutto ciò che avevo, oppure a volte semplicemente andavo in pezzi emotivamente (disregolazione). Forse ero (anche, o invece) il tipo che si dissociava, e il mio cervello mi teneva al sicuro separando la parte cosciente di me da ciò che stava succedendo al mio corpo. Il mio cervello ha ancora oggi queste capacità, ma fa fatica a distinguere tra un pericolo reale e uno percepito.` },
+      { pre: "Perché ho bisogno di avvicinarti a me,", key: "e poi di respingerti?",
+        text: `Desidero disperatamente la connessione e sentirmi amat{o|a}. Allo stesso tempo, sono cresciut{o|a} in un ambiente in cui le persone che mi amavano e si prendevano cura dei miei bisogni di base erano anche le persone che mi facevano del male. Questo ha creato in me tantissima confusione riguardo alla connessione, e anche se la desidero così tanto, mi è così difficile fidarmi del fatto che non verrò ferit{o|a}. Non sto respingendo TE; sto respingendo quanto sarà doloroso se verrò ferit{o|a}, soprattutto se mi abbandonerai. Quindi ti abbandonerò io per prim{o|a}. Poi avrò di nuovo bisogno della connessione e ti riavvicinerò a me. In quel momento tutto sembra così reale… passi così in fretta da “cattivo” a “buono”, da “cattivo” a “buono”. Lo odio anch'io.` },
+      { pre: "Perché a volte sono combattiv{o|a}, eppure a volte", key: "Faccio fatica a dire la mia?",
+        text: `Ho così tante emozioni sepolte in profondità dentro di me, soprattutto vergogna e rabbia. A volte queste emozioni sono così in fondo dentro di me che non so nemmeno che ci sono. Quello che succede è che a volte proietto queste emozioni sugli altri, e li faccio diventare i cattivi. Se qualcuno dice qualcosa che attiva queste emozioni, anche piccole cose, potrei diventare combattiv{o|a}, apertamente o in modo passivo, e litigare. Alcune cose sono molto importanti per me, abbastanza importanti da farmi dire la mia, ma a volte si tratta di qualcosa di più. A volte non sto litigando con la persona che ho davanti; a volte sto contrattaccando le persone che mi hanno fatto del male quando non avevo il potere di reagire. Altre volte ho troppa paura di dire quello che penso, perché ho paura di “agitare le acque” o di essere rifiutat{o|a}. Questo ha le sue radici nella vergogna.` },
+      { pre: "Perché la terapia può essere", key: "Così dolorosa per me?",
+        text: `Nelle relazioni provo emozioni così confuse, disorganizzate e dolorose. Il mio cervello mi gioca ogni tipo di scherzo nelle relazioni. A volte idealizzo le persone, come se fossero perfette e stessero per salvarmi. Ma se vengo ferit{o|a}, anche in piccola parte, quella persona può diventare il cattivo così in fretta. Per me è difficile vedere gli altri come persone intere, che possono essere buone ma comunque a volte deludermi. Poiché la terapia riguarda le relazioni, tutte queste emozioni emergono nella mia relazione con il terapeuta. A volte non mi permetto affatto di creare un legame; a volte mi lego così intensamente che fa male. A volte i terapeuti sono le uniche persone nella mia vita che mi abbiano mai dato sostegno emotivo. È così bello, ma poi devo andarmene e restare di nuovo da sol{o|a}. A volte, nella mia mente, il terapeuta può cominciare ad assumere il ruolo di un genitore. Allora tutte le emozioni più profonde che provo verso i miei genitori emergono nella mia relazione terapeutica, a volte perfino la rabbia. Allora potrei fare cose per allontanare il mio terapeuta.` },
+      { pre: "Perché ho bisogno di avere così tanta paura", key: "Delle persone e del mondo intorno a me?",
+        text: `Da bambin{o|a} il mio cervello si è sviluppato attorno all'idea che il mondo sia pericoloso… le persone care erano imprevedibili, forse gli altri bambini a scuola erano cattivi con me, forse dovevo fare tutto giusto ed essere perfett{o|a} in ogni momento per ricevere amore. Forse venivo ignorat{o|a}, forse l'unica volta in cui ricevevo un po' di attenzione era quando la pretendevo cacciandomi nei guai. Nessuna di queste cose favorirà il senso di sicurezza che provano le altre persone, cresciute in un ambiente più stabile. Ho imparato ad aspettarmi abbandono e rifiuto.` },
+      { pre: "Perché alcune persone come me fanno fatica con", key: "La nostra salute fisica e mentale?",
+        text: `Il mio sistema nervoso era in massima allerta per restare al sicuro mentre il mio cervello si stava formando. Quando l'ambiente di un bambino non è sicuro, è questo il modo in cui il cervello lo tiene al sicuro… restando in massima allerta per il pericolo, così da poter cercare di prevenirlo. Quando il sistema nervoso resta in massima allerta, vengono rilasciate sostanze chimiche che non dovrebbero restare a lungo nel mio corpo. Quando circolano costantemente nel mio corpo, diventano come una tossina, che stressa il mio cervello e il mio corpo in un modo o nell'altro. Questo stress fa sì che le sostanze chimiche del cervello e altre parti del mio corpo si danneggino, e sono particolarmente vulnerabile alle malattie che si trasmettono nei geni della mia famiglia.` }
+    ],
+    downside: [
+      `Il lato negativo di tutto questo è evidente… è un modo di vivere incredibilmente doloroso, e i comportamenti di sopravvivenza che le persone con un attaccamento disorganizzato usano per sopravvivere psicologicamente di solito si ritorcono contro di loro e peggiorano la loro vita e le loro relazioni. L'attaccamento disorganizzato ha un suo spettro. Alcune persone sono in generale disorganizzate, ma funzionano meglio di altre, e la loro disorganizzazione emerge solo con livelli di stress più alti. Alcune persone disorganizzate hanno livelli più alti di resilienza naturale, e alcune hanno avuto relazioni o eventi di vita che le hanno aiutate ad avere vite migliori.`,
+      `Non tutte le persone con un attaccamento disorganizzato si riconosceranno in tutto ciò che c'è in questo post, e ci sono altre dinamiche rimaste fuori. Il punto della disorganizzazione è che… è disorganizzata, e questo la rende più difficile da categorizzare rispetto agli altri stili di attaccamento insicuro, più prevedibili.`,
+      `Non è necessario che tu abbia vissuto il livello di trauma descritto in questo post per sviluppare un attaccamento disorganizzato. Un ambiente emotivamente tossico basta a creare un'esperienza interiore disorganizzata. A volte serve un occhio esperto per vedere cosa costituisce tossicità emotiva. A volte chi cresce in una casa generalmente amorevole vive abbastanza stress da essere spinto verso la disorganizzazione, e molte persone hanno, in età adulta, relazioni strette o esperienze abbastanza estreme da creare un attaccamento disorganizzato. Quando si sviluppa in età adulta, è più facile da guarire.`
+    ]
+  },
+  sicuro: {
+    name: "Stile sicuro", fig: "fig-sec", pose: "stretch", vb: [-14, 30, 668, 456],
+    cover: "Come fanno i partner sicuri a fare così??????",
+    labels: [
+      [6, 210, ["Trovare", "sicurezza"]], [2, 168, ["Accettare", "la realtà"]], [3, 132, ["Comunicare", "in modo efficace"]],
+      [1, 90, ["Connettersi", "con gli altri"]], [5, 52, ["Mantenere", "confini sani"]], [null, 14, ["Trovare fiducia", "nell'imperfezione"]],
+      [4, -38, ["Regolarsi", "sotto stress"]]
+    ],
+    slides: [
+      { pre: "Come faccio a", key: "Connettermi con il mio partner?",
+        text: `Siccome sono sicur{o|a}, non spendo molto tempo né energia per dover restare un passo avanti all'ansia e alla vergogna. Questo significa che non sento il bisogno di controllare e di evitare, ecc. La mia energia è libera di restare nel presente e nel mio corpo (consapevole dei miei pensieri e delle mie emozioni), e di esprimere il mio sé autentico senza paura del rifiuto. Anche se vengo rifiutat{o|a}, farà male, ma sopravviverò perché accetto me stess{o|a} e sono resiliente.` },
+      { pre: "Come faccio a trovare uno spazio di", key: "Accettazione?",
+        text: `Mi prendo il tempo di esplorare gli ambiti della mia vita in cui ho il controllo e quelli in cui non ce l'ho. Quando ho il controllo, scelgo intenzionalmente se esercitarlo o lasciarlo andare. Dove non ho il controllo, lavoro per arrivare all'accettazione. Non spenderò la mia preziosa energia vitale cercando di controllare cose che non posso controllare. A volte questo significa dover affrontare dolorose sensazioni di impotenza.` },
+      { pre: "Come faccio a comunicare", key: "In modo efficace?",
+        text: `In genere parlo partendo da me stess{o|a} e so essere vulnerabile quando è sicuro farlo. Mi piace la sensazione di avere un'influenza, ma non mi piace l'idea di controllare il mio partner, perché va contro il mio sistema di valori. So cosa penso e in cosa credo, ma sono anche apert{o|a} a lasciarmi smuovere e a rivalutare le mie idee. Mi tengo alla larga dall'incolpare, dal far vergognare, dalla difensività, dall'evitamento e dagli attacchi personali. Esprimo le lamentele quando ne ho, ma mi tengo alla larga dalla critica. Sono chiar{o|a} su ciò che voglio, sui miei bisogni e sulle mie aspettative, ma mi va bene non ottenere sempre ciò che voglio. Ascolto sempre il mio partner e gli rispondo con quanta più autenticità possibile (purché me lo dica in un modo che per me va bene). Sono apert{o|a} al compromesso, e i bisogni e i desideri del mio partner contano moltissimo per me, ma non acconsento mai a qualcosa per paura, bensì perché capisco che la flessibilità è fondamentale in una relazione che funziona.` },
+      { pre: "Come faccio a", key: "Regolare il mio corpo nei momenti di stress?",
+        text: `Capisco che le questioni di attaccamento nelle relazioni sono emotivamente potenti. Capisco che amare e impegnarsi in una relazione significa dover provare dolore, a volte, rabbia compresa; fa parte del pacchetto. Poiché il dolore emotivo è reale e inevitabile, ho imparato dei modi per regolarmi durante lo stress. So come fare respiri calmanti, orientarmi, cercare il sostegno delle altre persone della mia vita e usare altri strumenti che aiutano il mio corpo a rilassarsi. Uso anche l'empatia come strumento di regolazione. Quando riesco a entrare in empatia con il mio partner, mi sento molto meno minacciat{o|a}, e questo può essere calmante.` },
+      { pre: "Come faccio a", key: "Mantenere confini sani?",
+        text: `Ho un'idea chiara di come mi piace essere trattat{o|a} e di come mi piace che mi si parli, e sono chiar{o|a} su questo, così nessuno deve tirare a indovinare. Quando succede qualcosa al di fuori di quei limiti, lo affronto, perché è la cosa migliore per me, per il mio partner e per la mia relazione. Rispetto anche i confini del mio partner. Non posso costringere il mio partner a trattarmi in un certo modo, ma posso scegliere la mia risposta. Non sono dispost{o|a} a restare in una situazione o in una relazione di abuso. Ho dei confini anche verso me stess{o|a}. Non mi giustifico se mi comporto in modi che non vanno bene, indipendentemente da quello che fa il mio partner.` },
+      { pre: "Come ho", key: "Trovato la sicurezza?",
+        text: `Forse sono cresciut{o|a} in un ambiente che non era perfetto, ma era sufficientemente buono da farmi sentire emotivamente sostenut{o|a} e al sicuro. Se non è stato così, ho lavorato su me stess{o|a} per arrivare fin qui. Ho imparato a conoscere il mio stile di attaccamento e altre parti di me, e il modo in cui i comportamenti legati a queste cose si manifestavano nella mia vita e nelle mie relazioni in modi negativi, così ho capito cosa doveva cambiare. Ho imparato a circondarmi di persone che mi sostengono e ad allontanarmi da quelle che non riescono a esserci per me. O ho cercato una terapia per elaborare le mie emozioni, sviluppare consapevolezza, imparare nuovi comportamenti e tecniche di regolazione emotiva, oppure ho trovato altre risorse di aiuto. Capisco che la crescita è un processo che dura tutta la vita.` }
+    ]
+  },
+  attrezzi: {
+    type: "toolbox", name: "Cassetta degli attrezzi per i trigger", fig: "fig-tool",
+    cover: "“La cassetta degli attrezzi per i trigger nella relazione”",
+    coverSub: "(Cosa posso fare quando qualcosa che il mio partner fa o dice mi attiva?)",
+    steps: [
+      { title: "Riflettere su di sé", questions: [
+        "Cosa mi sta succedendo in questo momento?", "Sono attivat{o|a}?", "Come faccio a saperlo?",
+        "Che significato sto dando alle azioni del mio partner?", "È possibile che ci sia un significato alternativo?",
+        "Quali emozioni stanno emergendo?", "C'è tensione nel mio corpo?", "Cosa ho l'impulso di fare in questo momento?",
+        "Farlo sarebbe un bene per la mia crescita?", "Farlo sarebbe un bene per la mia relazione?",
+        "Come posso gestire tutto questo nel modo più sano possibile?" ] },
+      { title: "Regolarsi", breathe: true, bullets: [
+        "Come posso rilassare il mio sistema nervoso prima di rispondere?",
+        "Posso provare la respirazione <span class=\"nw\">4-7-8</span>: inspirare per 4 secondi, trattenere il respiro per 7 secondi, espirare per 8 secondi facendo un suono di soffio (le espirazioni lunghe segnalano sicurezza al tuo sistema nervoso).",
+        "Posso lasciar salire la rabbia dentro di me e, proprio quando è al suo culmine, stringere più forte che posso qualcosa che oppone resistenza, finché l'energia della rabbia non comincia a calare. Posso ripeterlo quanto serve, finché la tensione più acuta non passa.",
+        "Posso meditare o scrivere in un diario finché non sento di essere in uno stato in cui posso dare una risposta più sana.",
+        "Posso ricordarmi che, se rispondo in modo poco sano e reattivo solo perché il mio partner si è comportato male, sto solo rendendo più difficile la mia stessa vita." ] },
+      { title: "Entrare in empatia", paras: [
+        `Ora che mi sono un po' calmat{o|a}, sarò più curios{o|a} riguardo all'esperienza del mio partner. Cosa potrebbe star vivendo in questo momento? C'è qualcosa della sua esperienza in cui posso riconoscermi, in questo momento? Come posso capire meglio cosa sta vivendo, in questo momento, e dare più senso al suo comportamento, anche se non penso che il suo comportamento sia d'aiuto? Se fossi io a ferire il mio partner come forse mi ha ferit{o|a}, come vorrei che me ne parlasse?`,
+        `Entrerò in empatia, ma senza eccedere nell'empatia e abbandonare la mia esperienza. Invece lavorerò per mettere un piede nell'esperienza del mio partner, tenendo l'altro piede nella mia. Mi eserciterò a tenere insieme entrambe le nostre prospettive.` ] },
+      { title: "Validare", paras: [
+        `Ora che ho un po' di comprensione ed empatia per l'esperienza del mio partner, la validerò. Se fa un commento sgarbato su come ho caricato la lavastoviglie, potrei dire:` ],
+        example: `“So quanto è importante per te tenere le cose in ordine, e apprezzo quanto bene mandi avanti tutto qui in casa. Per me ha senso che ti dia fastidio quando ti sembra che io non sia attent{o|a} a questo tuo bisogno importante……”` },
+      { title: "Comunicare", paras: [
+        `Comincerò mostrando un po' di comprensione ed empatia per il mio partner, ma questo non significa che ciò che ha fatto sia stato un bene per noi. Però anch'io so cosa vuol dire sbagliare, e vorrei che ci si rivolgesse a me con comprensione. Se mi presento con protesta e critica, si sentirà sotto attacco. Se non mi presento affatto, e mi ritiro e basta, il mio partner proverà un senso di solitudine. Dopo aver mostrato comprensione, parlerò della mia parte e dell'effetto che la cosa ha avuto su di me, e di cosa mi farebbe stare meglio la prossima volta:` ],
+        example: `“…allo stesso tempo, quando mi comunichi il tuo disagio come hai fatto, mi lasci ferit{o|a} e con la sensazione di non avere spazio per fare le cose a modo mio, a volte, anche quando non è perfetto. Anche per me può essere davvero dura. Vorrei che lavorassimo insieme per trovare un equilibrio su questa questione.”` }
+    ],
+    extra: [
+      { title: "Parla partendo dal tuo “sé”", sub: "Ecco un altro esempio di come parlare partendo dal “sé” invece che dalla colpa:",
+        example: `Capisco che in questo momento ti senti un po' sotto stress per il lavoro e per i bambini. Allo stesso tempo, quando scatti così con me, mi cogli davvero alla sprovvista e mi fai male. C'è una parte di me che vorrebbe solo cominciare a contrattaccare, ma non voglio più farlo. Quindi, invece, ti dirò semplicemente che per me sarebbe molto meglio se potessi parlarmi della tua frustrazione invece di sfogarla su di me. Te la sentiresti di aiutarmi in questo?` },
+      { title: "Funzionerà?", sub: "Dipende da come definisci “funzionare”.", qa: [
+        ["È più probabile che ti tenga fuori da un ciclo negativo?", "Sì.", ""],
+        ["Significa che uno dei due partner è in colpa ed è responsabile di fare tutto il lavoro?", "No!", "Questo è un esempio di una singola interazione."],
+        ["Renderà più probabile che il tuo partner si metta meno sulla difensiva e si apra di più ad ascoltarti?", "Sì.", ""],
+        ["Riflette un modo di comunicare più sano di quello che hai usato in passato?", "Probabilmente.", ""],
+        ["Pianta i semi per una comunicazione più delicata e orientata all'attaccamento, pur avviando una conversazione su un problema reale?", "Sì.", ""] ] },
+      { title: "Funzionerà? (continua)", qa: [
+        ["Risolve direttamente il problema di partenza?", "No.", "Però crea più sicurezza emotiva, che può aprire lo spazio a una conversazione più sana che, se ripetuta nel tempo, PUÒ aiutare te e il tuo partner a risolvere i problemi con più serenità."],
+        ["Tutti i partner smetteranno di attivarsi e risponderanno “positivamente”?", "No.", "A volte servono “esperienze ripetute di qualcosa di nuovo” perché i partner si fidino di un nuovo modo di comunicare. Alcuni partner e alcune coppie hanno problemi di fiducia emotiva più profondi e/o problemi personali che bloccano la loro comunicazione. In questo caso, un aiuto professionale può aiutarli a sbloccarsi. Su <a href=\"https://iceeft.com\" target=\"_blank\" rel=\"noopener\">ICEEFT.com</a> trovi un terapeuta di coppia orientato all'attaccamento nella tua zona."] ] }
+    ]
+  },
+  equilibrio: {
+    type: "balance", name: "Equilibrio sano nella relazione", fig: "fig-bal",
+    title: "Equilibrio sano nella relazione", sub: "Tu, io e noi",
+    zones: [
+      { id: "tu", name: "TU", color: "var(--venn-you)", items: ["altre relazioni strette (famiglia e amici)", "modi diversi di fare le cose", "un forte senso di sé"] },
+      { id: "noi", name: "NOI", color: "var(--venn-us)", items: ["tempo insieme", "sesso", "interessi condivisi", "pensieri ed emozioni condivisi", "prospettive condivise", "legame forte; alleanza; intimità"] },
+      { id: "io", name: "IO", color: "var(--venn-me)", items: ["tempo trascorso separati", "interessi/hobby separati", "prospettive diverse"] }
+    ],
+    distance: "troppo poco “noi”; troppa distanza",
+    enmeshed: "troppo “noi”; invischiamento"
+  }
+};
+const ORDER = ["ansioso", "disorganizzato", "evitante", "sicuro", "attrezzi", "equilibrio"];
+
+const FIGBODY = `<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path class="o" d="M42 66 L80 112 L120 112 L158 66" stroke-width="32"/>
+    <path class="o" d="M100 116 L100 168" stroke-width="58"/>
+    <path class="o" d="M86 172 L82 236 M114 172 L118 236" stroke-width="32"/>
+    <path class="f" d="M42 66 L80 112 L120 112 L158 66" stroke-width="25"/>
+    <path class="f" d="M100 116 L100 168" stroke-width="51"/>
+    <path class="f" d="M86 172 L82 236 M114 172 L118 236" stroke-width="25"/>
+  </g>
+  <circle class="hd" cx="100" cy="44" r="29" stroke-width="3.5"/>`;
+const FIGSTRETCH = `<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path class="o" d="M92 118 L84 18" stroke-width="30"/><path class="o" d="M100 122 L92 176" stroke-width="56"/>
+    <path class="o" d="M118 124 L150 160 L122 178" stroke-width="26"/><path class="o" d="M84 182 L70 250 M104 184 L132 216 L120 254" stroke-width="30"/>
+    <path class="f" d="M92 118 L84 18" stroke-width="24"/><path class="f" d="M100 122 L92 176" stroke-width="50"/>
+    <path class="f" d="M118 124 L150 160 L122 178" stroke-width="20"/><path class="f" d="M84 182 L70 250 M104 184 L132 216 L120 254" stroke-width="24"/>
+  </g>
+  <circle class="hd" cx="130" cy="80" r="31" stroke-width="3"/>`;
+const FIG = `<svg viewBox="0 0 200 256" aria-hidden="true">${FIGBODY}</svg>`;
+const CREDIT = `<div class="credit"><svg viewBox="0 0 18 22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M9 21V6M9 12 4 8M9 10l5-4M9 15l-4-2M9 14l4-2M4 8 2 6M4 8 3 4M14 6l2-2M14 6l1-3M9 6 7 2M9 6l2-4"/></svg>The Secure Relationship</div>`;
+
+let form = "s", idx = 0, mode = "one", view = "home";
+try {
+  const f = localStorage.getItem("pa-form"); form = (f === "m" || f === "f") ? f : "s";
+  mode = localStorage.getItem("pa-mode") === "all" ? "all" : "one";
+} catch (e) {}
+
+const g = s => s.replace(/\{([^{}|]*)\|([^{}|]*)\}/g, (m, a, b) => form === "m" ? a : form === "f" ? b : "ə");
+const $ = id => document.getElementById(id);
+
+function diagram(labels, vbTop = 56, vb = null, pose = null) {
+  const cx = 320, cy = 280, rad = d => d * Math.PI / 180;
+  let arrows = "", out = "";
+  for (const [to, a, lines] of labels) {
+    const c = Math.cos(rad(a)), s = Math.sin(rad(a));
+    arrows += `<line class="arrow" x1="${(cx + 100 * c).toFixed(1)}" y1="${(cy - 118 * s).toFixed(1)}" x2="${(cx + 150 * c).toFixed(1)}" y2="${(cy - 158 * s).toFixed(1)}" marker-end="url(#ah)"/>`;
+    const lx = cx + 180 * c, ly = cy - 192 * s;
+    const anchor = c > 0.3 ? "start" : c < -0.3 ? "end" : "middle";
+    const lh = 25, n = lines.length;
+    const first = s > 0.3 ? ly - (n - 1) * lh : s < -0.3 ? ly + 18 : ly + 7 - (n - 1) * lh / 2;
+    const tspans = lines.map((t, k) => `<tspan x="${lx.toFixed(1)}" y="${(first + k * lh).toFixed(1)}">${g(t)}</tspan>`).join("");
+    const name = g(lines.join(" ")).replace(/[“”/]/g, " ").replace(/\s+/g, " ");
+    out += to == null
+      ? `<g class="lbl off"><text text-anchor="${anchor}">${tspans}</text></g>`
+      : `<g class="lbl" tabindex="0" role="button" data-go="${to}" aria-label="Apri: ${name}"><rect class="hit" rx="12"/><text text-anchor="${anchor}">${tspans}</text></g>`;
+  }
+  return `<svg class="diagram" viewBox="${vb ? vb.join(" ") : `0 ${vbTop} 640 ${486 - vbTop}`}" role="img" aria-label="Schema dei comportamenti">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ahp" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+    ${arrows}<g transform="translate(245 ${pose ? 178 : 184}) scale(.75)">${pose ? FIGSTRETCH : FIGBODY}</g>${out}</svg>`;
+}
+
+
+const TOOLBOX_ART = `<rect class="tool" x="176" y="150" width="30" height="230" rx="15"/><rect class="tool" x="434" y="150" width="30" height="230" rx="15"/>
+  <rect class="tool" x="196" y="170" width="248" height="16"/>
+  <rect class="tool" x="232" y="190" width="80" height="26" rx="6"/><rect class="tool" x="264" y="210" width="16" height="50"/>
+  <rect class="tool" x="330" y="182" width="9" height="46"/><rect class="tool" x="324" y="224" width="21" height="36" rx="5"/>
+  <circle cx="386" cy="204" r="16" fill="none" stroke="var(--fig-anx)" stroke-width="10"/><rect class="tool" x="381" y="214" width="10" height="46"/>
+  <rect class="tool" x="166" y="248" width="308" height="132" rx="14"/>`;
+const TOOLBOX_ICON = `<svg viewBox="150 140 340 250" aria-hidden="true">${TOOLBOX_ART}</svg>`;
+const TB_LABELS = [
+  [1, ["Riflettere", "su di sé"], 150, 296, "end", [156, 288, 190, 262]],
+  [2, ["Regolarsi"], 222, 456, "end", [212, 430, 246, 386]],
+  [3, ["Entrare", "in empatia"], 320, 456, "middle", [320, 428, 320, 386]],
+  [4, ["Validare"], 418, 456, "start", [428, 430, 394, 386]],
+  [5, ["Comunicare", "partendo dal “sé”"], 494, 296, "start", [498, 288, 470, 262]]
+];
+function toolboxDiagram() {
+  let out = "";
+  for (const [to, lines, x, y, anchor, a] of TB_LABELS) {
+    const ts = lines.map((t, k) => `<tspan x="${x}" y="${y + k * 30}">${t}</tspan>`).join("");
+    out += `<line class="arrow" x1="${a[0]}" y1="${a[1]}" x2="${a[2]}" y2="${a[3]}" marker-end="url(#ah)"/>
+      <g class="lbl tb-lbl" tabindex="0" role="button" data-go="${to}" aria-label="Apri: ${lines.join(" ").replace(/[“”]/g, "")}"><rect class="hit" rx="12"/><text text-anchor="${anchor}">${ts}</text></g>`;
+  }
+  return `<svg class="diagram" viewBox="-20 130 740 390" role="img" aria-label="Cassetta degli attrezzi con cinque strumenti">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ahp" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+    ${TOOLBOX_ART}${out}</svg>`;
+}
+function renderToolbox(S, attrs, total) {
+  const n = S.steps.length;
+  let html = `<section class="slide" ${attrs(0)}>
+    <h1 class="tb-cover-t">${S.cover}</h1><p class="tb-sub">${S.coverSub}</p>${toolboxDiagram()}
+    <p class="hint">Tocca uno strumento per aprirlo</p>${CREDIT}</section>`;
+  S.steps.forEach((st, k) => {
+    let body = "";
+    if (st.questions) body += `<ul class="qs">${st.questions.map(q => `<li>${g(q)}</li>`).join("")}</ul>`;
+    if (st.bullets) body += `<ul class="bul">${st.bullets.map(b => `<li>${g(b)}</li>`).join("")}</ul>`;
+    if (st.paras) body += st.paras.map(p => `<p>${g(p)}</p>`).join("");
+    if (st.example) body += `<blockquote class="example">${g(st.example)}</blockquote>`;
+    if (st.breathe) body += `<div class="breathe"><button class="breathe-btn" id="breatheBtn" type="button">Prova la respirazione 4-7-8</button>
+      <div class="breathe-box" id="breatheBox" hidden><div class="orb" id="orb"></div><div class="breathe-txt"><b id="bPhase">Inspira</b><span id="bCount"></span></div></div></div>`;
+    html += `<section class="slide" ${attrs(k + 1)}><p class="eyebrow">Strumento ${k + 1} di ${n}</p>
+      <h2 class="step-t">${st.title}</h2><div class="tb-body">${body}</div>${CREDIT}</section>`;
+  });
+  S.extra.forEach((ex, k) => {
+    let body = "";
+    if (ex.example) body += `<blockquote class="example">${g(ex.example)}</blockquote>`;
+    if (ex.qa) body += `<ul class="qa">${ex.qa.map(([q, a, r]) => `<li><p class="q">${q}</p><p class="a"><span class="chip${a.startsWith("Sì") ? " yes" : ""}">${a}</span>${r}</p></li>`).join("")}</ul>`;
+    html += `<section class="slide" ${attrs(n + 1 + k)}><h2 class="step-t">${ex.title}</h2>${ex.sub ? `<p class="step-sub">${ex.sub}</p>` : ""}
+      <div class="tb-body">${body}</div>${CREDIT}</section>`;
+  });
+  return html;
+}
+
+let bTimer = null;
+function stopBreath() {
+  clearTimeout(bTimer); bTimer = null;
+  const box = $("breatheBox"), btn = $("breatheBtn");
+  if (box) box.hidden = true;
+  if (btn) btn.textContent = "Prova la respirazione 4-7-8";
+}
+function startBreath() {
+  const box = $("breatheBox"), orb = $("orb");
+  box.hidden = false; $("breatheBtn").textContent = "Ferma";
+  const phases = [["Inspira", 4, 1], ["Trattieni", 7, 1], ["Espira", 8, .5]];
+  let pi = 0, left = 0;
+  const tick = () => {
+    if (left === 0) {
+      const [name, secs, scale] = phases[pi];
+      $("bPhase").textContent = name; left = secs;
+      orb.style.transitionDuration = secs + "s"; orb.style.transform = `scale(${scale})`;
+      pi = (pi + 1) % phases.length;
+    }
+    $("bCount").textContent = left + (left === 1 ? " secondo" : " secondi");
+    left--;
+    bTimer = setTimeout(tick, 1000);
+  };
+  orb.style.transitionDuration = "0s"; orb.style.transform = "scale(.5)";
+  requestAnimationFrame(() => requestAnimationFrame(tick));
+}
+
+
+const VENN_ICON = `<svg viewBox="0 0 120 80" aria-hidden="true"><circle cx="42" cy="40" r="30" fill="var(--venn-you)"/><circle cx="78" cy="40" r="30" fill="var(--venn-me)"/><circle cx="60" cy="40" r="24" fill="var(--venn-us)"/></svg>`;
+let balSel = null;
+function renderBalance(S, attrs) {
+  const zone = (id, cx, r, fill, label, tx, cls) => `<g class="z" data-z="${id}" tabindex="0" role="button" aria-label="Evidenzia ${label}"><circle cx="${cx}" cy="190" r="${r}" fill="${fill}"/><text x="${tx}" y="202" text-anchor="middle" class="${cls}">${label}</text></g>`;
+  const venn = `<svg class="venn" viewBox="40 30 520 320" role="img" aria-label="Tre cerchi: tu, noi, io">
+    ${zone("tu", 215, 150, "var(--venn-you)", "TU", 125, "t-dark")}
+    ${zone("io", 385, 150, "var(--venn-me)", "IO", 478, "t-dark")}
+    ${zone("noi", 300, 112, "var(--venn-us)", "NOI", 300, "t-light")}</svg>`;
+  const zones = `<div class="zones" id="zones">${S.zones.map(z => `<section class="zone" data-z="${z.id}"><h3><i style="background:${z.color}"></i>${z.name}</h3><ul>${z.items.map(t => `<li>${t}</li>`).join("")}</ul></section>`).join("")}</div>`;
+  const imb = `<div class="imb">
+    <figure><svg viewBox="0 0 230 120" aria-hidden="true"><circle cx="60" cy="60" r="52" fill="var(--venn-you)"/><text x="60" y="69" text-anchor="middle" fill="#1f251c">TU</text><circle cx="170" cy="60" r="52" fill="var(--venn-me)"/><text x="170" y="69" text-anchor="middle" fill="#1f251c">IO</text></svg><figcaption>${S.distance}</figcaption></figure>
+    <figure><svg viewBox="0 0 230 120" aria-hidden="true"><circle cx="106" cy="60" r="54" fill="var(--venn-you)"/><circle cx="124" cy="60" r="54" fill="var(--venn-me)"/><circle cx="117" cy="60" r="52" fill="var(--venn-us)"/><text x="117" y="69" text-anchor="middle" fill="#ffffff">NOI</text></svg><figcaption>${S.enmeshed}</figcaption></figure></div>`;
+  return `<section class="slide" ${attrs(0)}><h1 class="bal-t">${S.title}</h1>${venn}
+    <p class="hint">Tocca un cerchio per evidenziare cosa gli appartiene</p>${zones}${imb}${CREDIT}</section>`;
+}
+function selectZone(id) {
+  balSel = balSel === id ? null : id;
+  const v = document.querySelector(".venn"), zs = $("zones");
+  if (!v) return;
+  v.classList.toggle("sel", !!balSel); zs.classList.toggle("sel", !!balSel);
+  v.querySelectorAll(".z").forEach(z => { z.classList.toggle("on", z.dataset.z === balSel); z.setAttribute("aria-pressed", z.dataset.z === balSel ? "true" : "false"); });
+  zs.querySelectorAll(".zone").forEach(z => z.classList.toggle("on", z.dataset.z === balSel));
+}
+
+function slidesOf(key) {
+  const S = SERIES[key];
+  if (S.type === "toolbox") return 1 + S.steps.length + S.extra.length;
+  if (S.type === "balance") return 1;
+  return 1 + S.slides.length + (S.downside ? 1 : 0);
+}
+
+// subtitle for a style: the behaviours from its opening diagram, in slide order
+function behaviours(S) {
+  const items = S.labels.slice().sort((a, b) => (a[0] ?? 99) - (b[0] ?? 99))
+    .map(l => g(l[2].join(" ")).replace(/[“”!]/g, "").replace(/\/ /g, "/").toLowerCase());
+  const t = items.join(", ");
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
+function row(k) {
+  const S = SERIES[k];
+  const icon = S.type === "toolbox" ? TOOLBOX_ICON : S.type === "balance" ? VENN_ICON : FIG;
+  const sub = S.type === "toolbox" ? S.coverSub.replace(/[()]/g, "") : S.type === "balance" ? S.sub : "";
+  return `<li><a href="#${k}" class="${S.fig}">${icon}<span><span class="nm">${S.name}</span>${sub ? `<span class="q">${sub}</span>` : ""}</span><span class="go" aria-hidden="true">→</span></a></li>`;
+}
+function renderHome() {
+  $("seriesStyles").innerHTML = ORDER.filter(k => !SERIES[k].type).map(row).join("");
+  $("seriesTools").innerHTML = ORDER.filter(k => SERIES[k].type).map(row).join("");
+}
+
+function renderDeck() {
+  const S = SERIES[view], total = slidesOf(view);
+  const attrs = i => `id="slide-${i}" data-i="${i}" aria-roledescription="slide" aria-label="${i + 1} di ${total}"`;
+  let html;
+  if (S.type === "toolbox") html = renderToolbox(S, attrs, total);
+  else if (S.type === "balance") html = renderBalance(S, attrs);
+  else {
+  html = `<section class="slide cover ${S.fig}" ${attrs(0)}>
+      <h1 class="cover-t">${S.cover}</h1>${diagram(S.labels, S.vbTop, S.vb, S.pose)}
+      <p class="hint">Tocca una parola per leggere la spiegazione</p>${CREDIT}</section>`;
+  S.slides.forEach((s, k) => {
+    html += `<section class="slide ${S.fig}" ${attrs(k + 1)}>
+      <h2 class="s-title"><span class="pre">${g(s.pre)}</span><span class="key">${g(s.key)}</span></h2>
+      <div class="speech"><div class="figwrap">${FIG}</div><div class="bubble"><p>${g(s.text)}</p></div></div>${CREDIT}</section>`;
+  });
+  if (S.downside) html += `<section class="slide downside" ${attrs(total - 1)}>
+      <h2 class="down-t">${S.downTitle || "Qual è il LATO NEGATIVO di tutto questo?"}</h2>
+      <div class="body">${S.downside.map(p => `<p>${g(p)}</p>`).join("")}</div></section>`;
+  }
+  stopBreath();
+  $("deck").innerHTML = html;
+  const bb = $("breatheBtn");
+  if (bb) bb.onclick = () => bTimer ? stopBreath() : startBreath();
+  balSel = null;
+  document.querySelectorAll(".venn .z").forEach(z => {
+    z.addEventListener("click", () => selectZone(z.dataset.z));
+    z.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectZone(z.dataset.z); } });
+  });
+  $("dots").innerHTML = Array.from({ length: total }, (_, i) => `<button aria-label="Vai alla slide ${i + 1}" data-i="${i}"></button>`).join("");
+  $("deck").querySelectorAll(".lbl").forEach(el => {
+    const go = () => goTo(+el.dataset.go, true);
+    el.addEventListener("click", go);
+    el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+  });
+}
+
+function fitHits() {
+  document.querySelectorAll(".lbl").forEach(el => {
+    const t = el.querySelector("text"), r = el.querySelector(".hit");
+    try {
+      const b = t.getBBox();
+      if (!b.width) return;
+      r.setAttribute("x", b.x - 10); r.setAttribute("y", b.y - 5);
+      r.setAttribute("width", b.width + 20); r.setAttribute("height", b.height + 10);
+    } catch (e) {}
+  });
+}
+
+function render() {
+  const inSeries = view !== "home";
+  $("home").hidden = inSeries;
+  $("deck").hidden = !inSeries;
+  $("nav").hidden = !inSeries || mode === "all";
+  document.body.classList.toggle("has-nav", !$("nav").hidden);
+  $("backBtn").hidden = !inSeries;
+  document.querySelector(".top .seg").hidden = !inSeries;
+  $("modeBtn").hidden = !inSeries;
+  if (inSeries) renderDeck(); else renderHome();
+  applyState(false);
+}
+
+function applyState(scroll) {
+  document.querySelectorAll(".seg button[data-form]").forEach(b => b.setAttribute("aria-pressed", b.dataset.form === form ? "true" : "false"));
+  if (view === "home") return;
+  const total = slidesOf(view), deck = $("deck");
+  deck.className = "deck " + (mode === "all" ? "all" : "one");
+  $("nav").hidden = mode === "all" || total === 1;
+  document.body.classList.toggle("has-nav", !$("nav").hidden);
+  $("modeBtn").hidden = total === 1;
+  deck.querySelectorAll(".slide").forEach(s => s.classList.toggle("active", +s.dataset.i === idx));
+  $("dots").querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-current", i === idx ? "true" : "false"));
+  $("count").textContent = `${idx + 1} / ${total}`;
+  $("prev").disabled = idx === 0;
+  $("next").disabled = idx === total - 1;
+  $("modeBtn").textContent = mode === "all" ? "Leggi una slide alla volta" : "Leggi tutto di seguito";
+  if (scroll) {
+    const target = mode === "all" ? $("slide-" + idx) : deck;
+    if (mode === "all" || target.getBoundingClientRect().top < 0)
+      target.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  }
+  requestAnimationFrame(fitHits);
+}
+function goTo(i, scroll) { stopBreath(); idx = Math.max(0, Math.min(slidesOf(view) - 1, i)); applyState(scroll); }
+
+function route() {
+  const h = location.hash.replace("#", "");
+  view = SERIES[h] ? h : "home";
+  idx = 0;
+  render();
+  window.scrollTo(0, 0);
+}
+
+$("dots").addEventListener("click", e => { const b = e.target.closest("button"); if (b) goTo(+b.dataset.i, true); });
+$("prev").onclick = () => goTo(idx - 1, true);
+$("next").onclick = () => goTo(idx + 1, true);
+$("backBtn").onclick = e => { e.preventDefault(); location.hash = ""; route(); };
+$("modeBtn").onclick = () => {
+  mode = mode === "all" ? "one" : "all";
+  try { localStorage.setItem("pa-mode", mode); } catch (e) {}
+  applyState(true);
+};
+document.querySelectorAll(".seg button[data-form]").forEach(b => b.onclick = () => {
+  form = b.dataset.form;
+  try { localStorage.setItem("pa-form", form); } catch (e) {}
+  render();
+});
+document.addEventListener("keydown", e => {
+  if (view === "home" || mode !== "one" || e.target.closest("input, textarea")) return;
+  if (e.key === "ArrowRight") goTo(idx + 1, true);
+  if (e.key === "ArrowLeft") goTo(idx - 1, true);
+});
+let tx = null, ty = null;
+$("deck").addEventListener("touchstart", e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+$("deck").addEventListener("touchend", e => {
+  if (mode !== "one" || tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) goTo(idx + (dx < 0 ? 1 : -1), true);
+  tx = null;
+}, { passive: true });
+window.addEventListener("hashchange", route);
+
+route();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHits);
+</script>
+</body>
+</html>
